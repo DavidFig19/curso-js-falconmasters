@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mi primera página web con Javascript</title>
+
+    <link rel="stylesheet" href="./estilos.css">
+
+    <!-- Forma #2 - Etiqueta Script en Head con defer -->
+	<script defer>
+        console.log('hola mundo desde head');
+        
+    </script>
+
+    <!-- Forma #3 - Archivo externo -->
+    <script defer src="./holaMundo.js"></script>
+
 </head>
 <body>
+    <h1>Hola mundo</h1>
     
+    <!-- Forma #1 - Etiqueta Script -->
+    <script>
+
+        // Notas importantes:
+		// - Javascript es sensible a mayusculas y minisculas.
+		// - Respetar la sintaxis de tipo camel case. getElementById
+		// - Punto y coma al final de cada sentencia.
+
+        document.write('<h2>Hola Mundo!</h2>');
+        console.log('Hola, desde la consola');
+
+        // Comentarios de tipo linea
+		/*
+			Comentarios de varias lineas
+			(tipo bloque)
+		*/
+		// El codigo comentado no se ejecuta
+		// alert('Este codigo no se ejecuta');
+        
+    </script>
 </body>
 </html>
