@@ -34,13 +34,13 @@ registrarUsuario('Carlos', 'correo@correo.com');
 registrarUsuario('Alejandro', 'alejandro@correo.com', 28, 'España');
 
 /*
-	📌 Destructuración de objetos
+	📌 Desestructuración de objetos
 	Nos permite obtener elementos o propiedades de un arreglo u objeto y guardarlos en una variable.
 */
 const amigos = ['Alejandro', 'Cesar', 'Manuel'];
 const [primerAmigo, segundoAmigo, tercerAmigo] = amigos;
 
-// Sin destructuración:
+// Sin desestructuración:
 // const primerAmigo = amigos[0];
 // const segundoAmigo = amigos[1];
 
@@ -55,7 +55,7 @@ const persona = {
 const { nombre, pais } = persona;
 console.log(nombre, pais);
 
-// Podemos destructurar los valores de una funcion
+// Podemos desestructurar los valores de una función
 const mostrarEdad = ({ nombre, edad }) => {
 	console.log(`${nombre} tiene ${edad} años`);
 };
