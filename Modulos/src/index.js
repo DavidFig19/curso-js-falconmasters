@@ -30,3 +30,14 @@
 */
 import obtenerUsuario from './defaultExport';
 console.log(obtenerUsuario());
+
+/* 
+	📌 Empty Imports
+	Carga todo el codigo pero sin hacer ningun objeto.
+*/
+import './emptyExport';
+
+// No podemos acceder a las variables definidas en el archivo emptyExport.
+// Si las necesitamos tenemos que que exportarlas.
+import { correo } from './emptyExport';
+console.log(correo);

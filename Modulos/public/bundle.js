@@ -26,6 +26,10 @@ const obtenerUsuario = () => {
 	};
 };
 
+console.log('Soy codigo que se ejecuta desde el archivo emptyExport.js');
+
+const correo = 'correo@correo.com';
+
 /* 
 	📌 Named Imports
 */
@@ -40,3 +44,4 @@ const obtenerUsuario = () => {
 // console.log(obtenerPosts());
 
 console.log(obtenerUsuario());
+console.log(correo);
