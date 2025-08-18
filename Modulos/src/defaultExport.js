@@ -1,5 +1,3 @@
-'use strict';
-
 /*
 	📌 Default Exports
 	Cuando trabajamos con default exports solo podemos exportar una cosa del archivo.
@@ -26,17 +24,4 @@ const obtenerUsuario = () => {
 	};
 };
 
-/* 
-	📌 Named Imports
-*/
-/* 
-	📌 Named Imports
-	Podemos importar variables y funciones que han sido exportadas mediante la palabra "export".
-	Podemos importarlas con el mismo nombre o podemos usar un alias usando la palabra "as".
-	Normalmente todos los import se establecen al inicio del documento.
-*/
-// import { nombre as nombreImportado, obtenerPosts } from './namedExports';
-// console.log('Mi nombre es ' + nombreImportado);
-// console.log(obtenerPosts());
-
-console.log(obtenerUsuario());
+export default obtenerUsuario;

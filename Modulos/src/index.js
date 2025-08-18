@@ -18,6 +18,15 @@
 	Podemos importar todas las variables y funciones que fueron exportadas 
 	con un named export dentro de un objeto.
 */
-import * as datos from './namedExports';
-console.log(datos.nombre);
-console.log(datos.obtenerPosts());
+// import * as datos from './namedExports';
+// console.log(datos.nombre);
+// console.log(datos.obtenerPosts());
+
+/* 
+	📌 Default Imports
+*/
+/* 
+	Los default imports no utilizan llaves y podemos ponerles el nombre que queramos.
+*/
+import obtenerUsuario from './defaultExport';
+console.log(obtenerUsuario());
