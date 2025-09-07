@@ -12,6 +12,8 @@ contenedorCategorias.addEventListener('click', ( e) => {
         document.body.style.overflow = 'hidden';
 
         const categoriaActiva = e.target.closest('a').dataset.categoria;
+        galeria.dataset.categoria = categoriaActiva;
+
         const fotos = dataFotos.fotos[categoriaActiva];
         const carousel = galeria.querySelector('.galeria__carousel-slides');
 
@@ -23,7 +25,7 @@ contenedorCategorias.addEventListener('click', ( e) => {
         fotos.forEach((foto) => {
             const slide = `
                 <a href="#" class="galeria__carousel-slide">
-				    <img class="galeria__carousel-image" src="${foto.ruta}" alt="" />
+				    <img class="galeria__carousel-image" src="${foto.ruta}" data-id="${foto.id}" alt="" />
 				</a>
             `;
 

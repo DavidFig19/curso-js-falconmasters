@@ -1,6 +1,6 @@
 'use strict';
 
-var dataFotos = {
+var datos = {
 	fotos: {
 		america: [
 			{
@@ -431,7 +431,7 @@ var dataFotos = {
 	},
 };
 
-const { fotos } = dataFotos;
+const { fotos } = datos;
 
 var dataCategorias = {
 	categorias: [
@@ -490,7 +490,9 @@ contenedorCategorias.addEventListener('click', ( e) => {
         document.body.style.overflow = 'hidden';
 
         const categoriaActiva = e.target.closest('a').dataset.categoria;
-        const fotos = dataFotos.fotos[categoriaActiva];
+        galeria$2.dataset.categoria = categoriaActiva;
+
+        const fotos = datos.fotos[categoriaActiva];
         const carousel = galeria$2.querySelector('.galeria__carousel-slides');
 
        const {id, nombre, ruta, descripcion} = fotos[0];
@@ -501,7 +503,7 @@ contenedorCategorias.addEventListener('click', ( e) => {
         fotos.forEach((foto) => {
             const slide = `
                 <a href="#" class="galeria__carousel-slide">
-				    <img class="galeria__carousel-image" src="${foto.ruta}" alt="" />
+				    <img class="galeria__carousel-image" src="${foto.ruta}" data-id="${foto.id}" alt="" />
 				</a>
             `;
 
@@ -522,6 +524,27 @@ const cerrarGaleria = () => {
     document.body.style.overflow = '';
 };
 
+const slideClick = (e) => {
+    let ruta, nombre, descripcion;
+
+    const id = parseInt(e.target.dataset.id);
+    const galeria = document.getElementById('galeria');
+    const categoriaActiva = galeria.dataset.categoria;
+    
+    datos.fotos[categoriaActiva].forEach((foto) => {
+        if(foto.id === id){
+            ruta = foto.ruta;
+            nombre = foto.descripcion;
+            descripcion = foto.descripcion;
+        }
+    });
+    
+
+    cargarImagen(id, nombre, ruta, descripcion);
+    
+    
+};
+
 const galeria = document.getElementById('galeria');
 galeria.addEventListener('click', (e) => {
     const boton = e.target.closest('button');
@@ -532,9 +555,12 @@ galeria.addEventListener('click', (e) => {
     // ? valida si tiene la propiedad
 
     if(boton?.dataset?.accion === 'cerrar-galeria'){
-
         cerrarGaleria();
-        
     }
-    
+
+    // - - - CAROUSEL SLIDE CLICK
+	// Comprobamos si el elemento tiene un data set y se llama idFoto.
+    if(e.target.dataset.id){
+        slideClick(e);
+    }
 });

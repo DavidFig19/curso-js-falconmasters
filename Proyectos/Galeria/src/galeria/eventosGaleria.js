@@ -1,4 +1,5 @@
 import cerrarGaleria from "./cerrarGaleria";
+import slideClick from "./slideClick";
 
 const galeria = document.getElementById('galeria');
 galeria.addEventListener('click', (e) => {
@@ -10,9 +11,12 @@ galeria.addEventListener('click', (e) => {
     // ? valida si tiene la propiedad
 
     if(boton?.dataset?.accion === 'cerrar-galeria'){
-
         cerrarGaleria();
-        
     }
-    
+
+    // - - - CAROUSEL SLIDE CLICK
+	// Comprobamos si el elemento tiene un data set y se llama idFoto.
+    if(e.target.dataset.id){
+        slideClick(e);
+    }
 });
