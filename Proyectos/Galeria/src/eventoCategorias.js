@@ -1,4 +1,5 @@
 import dataFotos from './datos/fotos';
+import { cargarImagen } from './galeria/cargarImagen';
 
 const contenedorCategorias = document.getElementById('categorias');
 const galeria = document.getElementById('galeria');
@@ -13,6 +14,9 @@ contenedorCategorias.addEventListener('click', ( e) => {
         const categoriaActiva = e.target.closest('a').dataset.categoria;
         const fotos = dataFotos.fotos[categoriaActiva];
         const carousel = galeria.querySelector('.galeria__carousel-slides');
+
+       const {id, nombre, ruta, descripcion} = fotos[0];
+       cargarImagen(id, nombre, ruta, descripcion);
 
         carousel.innerHTML = '';
         
