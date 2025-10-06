@@ -477,6 +477,29 @@ const cargarImagen = (id, nombre, ruta, descripcion) => {
     galeria$3.querySelector('.galeria__imagen').dataset.idImagen = id;
     galeria$3.querySelector('.galeria__titulo').innerText = nombre;
     galeria$3.querySelector('.galeria__descripcion-imagen-activa').innerText = descripcion;
+
+    const categoriaActual = galeria$3.dataset.categoria;
+    const fotos = datos.fotos[categoriaActual];
+    let indexImagenActual;
+    fotos.forEach((foto, index) => {
+        if(foto.id === id){
+           indexImagenActual = index;
+        }
+    });
+
+  
+    //Marcados la imagne del carousel como activa
+    if(galeria$3.querySelectorAll('.galeria__carousel-slide').length > 0){
+
+        //Eliminamos la clase active de cualquier slide que la tenga
+        galeria$3.querySelector('.galeria__carousel-slide--active').classList.remove('galeria__carousel-slide--active');
+
+
+        galeria$3.querySelectorAll('.galeria__carousel-slide')[indexImagenActual].classList.add('galeria__carousel-slide--active');
+    }
+   
+   
+    
 };
 
 const contenedorCategorias = document.getElementById('categorias');
