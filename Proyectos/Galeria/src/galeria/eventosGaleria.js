@@ -1,5 +1,6 @@
 import cerrarGaleria from "./cerrarGaleria";
 import slideClick from "./slideClick";
+import { cargarAnteriorSiguiente } from "./cargarImagen";
 
 const galeria = document.getElementById('galeria');
 galeria.addEventListener('click', (e) => {
@@ -18,5 +19,15 @@ galeria.addEventListener('click', (e) => {
 	// Comprobamos si el elemento tiene un data set y se llama idFoto.
     if(e.target.dataset.id){
         slideClick(e);
+    }
+
+    // - - - Siguiente Imagen
+    if(boton?.dataset?.accion === 'siguiente-imagen' ){
+        cargarAnteriorSiguiente('siguiente');   
+    }
+
+    // - - - Anterior Imagen
+    if(boton?.dataset?.accion === 'anterior-imagen' ){
+       cargarAnteriorSiguiente('anterior');
     }
 });

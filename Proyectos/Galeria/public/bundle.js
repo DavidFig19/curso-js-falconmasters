@@ -502,6 +502,36 @@ const cargarImagen = (id, nombre, ruta, descripcion) => {
     
 };
 
+const cargarAnteriorSiguiente = (direccion) => {
+    const categoriaActual = galeria$3.dataset.categoria;
+    const fotos = datos.fotos[categoriaActual];
+    const idImagenActual = parseInt(galeria$3.querySelector('.galeria__imagen').dataset.idImagen);
+    
+    let indexImagenActual;
+
+    fotos.forEach((foto, index) => {
+        if(foto.id === idImagenActual){
+           indexImagenActual = index;
+        }
+    });
+
+    if(direccion == 'siguiente'){
+
+        if(fotos[indexImagenActual + 1]){
+            const { id, nombre, ruta, descripcion } = fotos[indexImagenActual + 1];
+            cargarImagen(id, nombre, ruta, descripcion);
+        }
+       
+        
+    }else if(direccion == 'anterior'){
+           
+        if(fotos[indexImagenActual - 1]){
+            const { id, nombre, ruta, descripcion } = fotos[indexImagenActual - 1];
+            cargarImagen(id, nombre, ruta, descripcion);
+        }
+    }
+};
+
 const contenedorCategorias = document.getElementById('categorias');
 const galeria$2 = document.getElementById('galeria');
 
@@ -585,5 +615,15 @@ galeria.addEventListener('click', (e) => {
 	// Comprobamos si el elemento tiene un data set y se llama idFoto.
     if(e.target.dataset.id){
         slideClick(e);
+    }
+
+    // - - - Siguiente Imagen
+    if(boton?.dataset?.accion === 'siguiente-imagen' ){
+        cargarAnteriorSiguiente('siguiente');   
+    }
+
+    // - - - Anterior Imagen
+    if(boton?.dataset?.accion === 'anterior-imagen' ){
+       cargarAnteriorSiguiente('anterior');
     }
 });
