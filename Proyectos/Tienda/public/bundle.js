@@ -85,6 +85,8 @@ const formatearMoneda = new Intl.NumberFormat("es-MX", {
   currency: "MXN",
 });
 
+const notificacion  = document.getElementById('notificacion');
+
 const renderCarrito = () => {
   ventanaCarrito.classList.add("carrito--active");
 
@@ -238,6 +240,23 @@ btnAgregarCarrito.addEventListener("click", () => {
       tamaño: tamaño,
     });
   }
+
+  // Establecemos la ruta de la imagen que vamos a querer mostrar.
+  let thumbSrc = producto.querySelectorAll('.producto__thumb-img')[0].src;
+  if(color === 'rojo'){
+    thumbSrc = './img/thumbs/rojo.jpg';
+  }else if(color === 'amarillo'){
+    thumbSrc = './img/thumbs/amarillo.jpg';
+  }
+  notificacion.querySelector('img').src = thumbSrc;
+
+  // Mostramos la notificacion
+  notificacion.classList.add('notificacion--active');
+
+  // Despues de 5 segundos la ocultamos.
+  setTimeout(() => {
+     notificacion.classList.remove('notificacion--active');
+  }, 5000);
 });
 
 // Botones eliminar del carrito
