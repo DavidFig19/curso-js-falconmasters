@@ -137,7 +137,8 @@ const renderCarrito = () => {
 				/>
 				</svg>
 			</button>
-			<p class="carrito__producto-precio">${
+			<p class="carrito__producto-precio">
+        ${
           formatearMoneda.format(productoCarrito.precio  * productoCarrito.cantidad)
         }
       </p>
@@ -182,11 +183,34 @@ btnAgregarCarrito.addEventListener("click", () => {
     "#propiedad-tamaño input:checked"
   ).value;
 
-  carrito.push({
-    id: id,
-    nombre: nombre,
-    cantidad: cantidad,
-    color: color,
-    tamaño: tamaño,
-  });
+  if(carrito.length > 0){
+    let productoEnCarrito = false;
+
+    carrito.forEach(item => {
+      if(item.id === id && item.nombre === nombre && item.color === color && item.tamaño === tamaño){
+        item.cantidad += cantidad;
+        productoEnCarrito = true;
+      }
+    });
+
+    if(!productoEnCarrito){
+      carrito.push({
+        id: id,
+        nombre: nombre,
+        cantidad: cantidad,
+        color: color,
+        tamaño: tamaño,
+      });
+    }
+
+  }else {
+    carrito.push({
+      id: id,
+      nombre: nombre,
+      cantidad: cantidad,
+      color: color,
+      tamaño: tamaño,
+    });
+  }
+  
 });
