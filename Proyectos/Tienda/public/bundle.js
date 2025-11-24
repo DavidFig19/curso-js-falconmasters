@@ -49,6 +49,27 @@ btnDisminuirCantidad.addEventListener('click', (e) => {
   
 });
 
+var data = {
+  productos:[
+    {
+      id:'1',
+      nombre:'Tennis Converse Standard.',
+      descripcion:'Lorem ipsum dolor sit amet.',
+      precio:500,
+      colores:['negro','rojo','amarillo'],
+      tamaños:['1,5', '2', '2,5', '3', '4']
+    },
+    {
+      id:'2',
+      nombre:'Tennis Converse 2000.',
+      descripcion:'Lorem ipsum dolor sit amet.',
+      precio:450,
+      colores:['negro','rojo','amarillo'],
+      tamaños:['1,5', '2', '2,5', '3', '4']
+    }
+  ]
+};
+
 const botonesAbrirCarrito = document.querySelectorAll(
   '[data-accion="abrir-carrito"]'
 );
@@ -59,6 +80,7 @@ const ventanaCarrito = document.getElementById("carrito");
 const btnAgregarCarrito = document.getElementById("agregar-al-carrito");
 const producto = document.getElementById("producto");
 const carrito = [];
+const formatearMoneda = new Intl.NumberFormat('es-MX',{style: 'currency', currency:'MXN'});
 
 const renderCarrito = () => {
   ventanaCarrito.classList.add("carrito--active");
@@ -70,9 +92,17 @@ const renderCarrito = () => {
   // Itereamos sobre cada producto del carrito y lo mostramos
   carrito.forEach((productoCarrito) => {
 
+    // Obtenemos el precio del archivo de producto.js
+    // Cuando el id del item del carrito sea el mismo que alguno de la lista.
+    data.productos.forEach((ProductoBaseDatos) => {
+      if(ProductoBaseDatos.id === productoCarrito.id){
+        productoCarrito.precio = ProductoBaseDatos.precio;
+      }
+    });
 
+
+    // Establecemos la ruta de la imagen que vamos a querer mostrar.
     let thumbSrc = producto.querySelectorAll('.producto__thumb-img')[0].src;
-    
     if(productoCarrito.color === 'rojo'){
       thumbSrc = './img/thumbs/rojo.jpg';
     }else if(productoCarrito.color === 'amarillo'){
@@ -107,7 +137,10 @@ const renderCarrito = () => {
 				/>
 				</svg>
 			</button>
-			<p class="carrito__producto-precio">$500.00</p>
+			<p class="carrito__producto-precio">${
+          formatearMoneda.format(productoCarrito.precio  * productoCarrito.cantidad)
+        }
+      </p>
 		</div>
     `;
 
