@@ -4,6 +4,8 @@ import siguientePaso from "./siguientePaso";
 
 const formulario = document.getElementById('formulario');
 
+//Reiniciando el scroll al cargar el formulario.
+formulario.querySelector('.formulario__body').scrollLeft = 0;
 
 // EventListener para comprobar los campos de formulario cuando el usuario corrige.
 formulario.addEventListener('keyup', (e) => {

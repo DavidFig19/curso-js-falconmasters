@@ -26,8 +26,39 @@ const marcarPaso = (paso) => {
         .classList.add('linea-pasos__paso-check--checked');
 };
 
+const siguientePaso = () => {
+
+    // Creamos un arreglo con los pasos.
+    const pasos = [...document.querySelectorAll('.linea-pasos__paso')];
+    
+    // Obtenemos el paso activo.
+    const pasoActivo = document.querySelector('.linea-pasos__paso-check--active').closest('.linea-pasos__paso');
+    
+
+    // Obtenemos el index del paso activo.
+    const indexPasoActivo = pasos.indexOf(pasoActivo);
+
+    if(indexPasoActivo < pasos.length - 1){
+        // Eliminamos la clase de paso activo.
+        pasoActivo.querySelector('span').classList.remove('linea-pasos__paso-check--active');
+
+        // Ponemos la clase de paso activo al siguiente elemento.
+        pasos[indexPasoActivo + 1].querySelector('span').classList.add('linea-pasos__paso-check--active');
+
+        const id = pasos[indexPasoActivo + 1].dataset.paso;
+        document.querySelector(`.formulario__body [data-paso="${id}"]`).scrollIntoView({
+            inline:'start',
+            behavior:'smooth'
+        });
+        
+    }
+    
+};
+
 const formulario = document.getElementById('formulario');
 
+//Reiniciando el scroll al cargar el formulario.
+formulario.querySelector('.formulario__body').scrollLeft = 0;
 
 // EventListener para comprobar los campos de formulario cuando el usuario corrige.
 formulario.addEventListener('keyup', (e) => {
@@ -50,6 +81,7 @@ btnFormulario.addEventListener('click', (e) => {
     if(pasoActual === 'cantidad'){
         if(validarCantidad()){
             marcarPaso('cantidad');
+            siguientePaso();
         }
     }
     
