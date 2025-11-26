@@ -20,6 +20,12 @@ const validarCantidad = () => {
     
 };
 
+const marcarPaso = (paso) => {
+    document
+        .querySelector(`.linea-pasos [data-paso="${paso}"] span`)
+        .classList.add('linea-pasos__paso-check--checked');
+};
+
 const formulario = document.getElementById('formulario');
 
 
@@ -42,8 +48,9 @@ btnFormulario.addEventListener('click', (e) => {
     console.log(pasoActual);
 
     if(pasoActual === 'cantidad'){
-        marcarPaso();
-        validarCantidad();
+        if(validarCantidad()){
+            marcarPaso('cantidad');
+        }
     }
     
 });
