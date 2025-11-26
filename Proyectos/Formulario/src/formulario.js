@@ -1,25 +1,4 @@
-'use strict';
-
-const formulario$1 = document.getElementById('formulario');
-
-const validarCantidad = () => {
-    // Aceptamos cualquier digito (0-9), y un punto con decimales (opcional)
-    const expRegCantidad = /^\d+(\.\d+)?$/;
-
-    // Obtenemos el input cantidad
-    const inputCantidad = formulario$1.cantidad;
-
-    if(expRegCantidad.test(inputCantidad.value)){
-        inputCantidad.classList.remove('formulario__input--error');
-        return true;
-    }else {
-        inputCantidad.classList.add('formulario__input--error');
-        return false;
-    }
-    
-    
-};
-
+import validarCantidad from "./validarCantidad";
 const formulario = document.getElementById('formulario');
 
 
@@ -47,4 +26,3 @@ btnFormulario.addEventListener('click', (e) => {
     }
     
 });
-//# sourceMappingURL=bundle.js.map
