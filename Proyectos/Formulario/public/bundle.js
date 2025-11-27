@@ -134,7 +134,36 @@ btnFormulario.addEventListener('click', (e) => {
         }
     }else if(pasoActual === 'metodo'){
         marcarPaso('metodo');
+
+        // Formato de moneda
+        const opciones = {style:'currency', currency:'MXN'};
+        const formatoMoneda = new Intl.NumberFormat('es-MX',opciones);
+
+        document.querySelector('[data-valor="cantidad"] span').innerText = formatoMoneda.format(formulario.cantidad.value);
+        document.querySelector('[data-valor="nombre-receptor"] span').innerText = formulario['nombre-receptor'].value;
+        document.querySelector('[data-valor="correo-receptor"] span').innerText = formulario['correo-receptor'].value;
+        document.querySelector('[data-valor="metodo"] span').innerText = formulario.metodo.value;
+
+        // Cambiamos el texto del btn a Transferir
+        btnFormulario.querySelector('span').innerHTML = 'Transferir';
+
+        // Agregamos la clase que deshabilita el boton.
+        btnFormulario.classList.add('formulario__btn--disabled');
+
+        // Ocultamos el icono de siguiente.
+        btnFormulario.querySelector('[data-icono="siguiente"]').classList.remove('formulario__btn-contenedor-icono--active');
+
+        // Mostramos el icono del banco.
+        btnFormulario.querySelector('[data-icono="banco"]').classList.add('formulario__btn-contenedor-icono--active');
+
         siguientePaso();
+
+        // Eliminamos la clase de disabled despues de 4 segundos.
+        setTimeout(() => {
+            btnFormulario.classList.remove('formulario__btn--disabled');
+
+        }, 4000);
+
     }
     
 });
