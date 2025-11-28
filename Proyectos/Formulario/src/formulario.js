@@ -55,7 +55,7 @@ btnFormulario.addEventListener('click', (e) => {
         document.querySelector('[data-valor="metodo"] span').innerText = formulario.metodo.value;
 
         // Cambiamos el texto del btn a Transferir
-        btnFormulario.querySelector('span').innerHTML = 'Transferir';
+        btnFormulario.querySelector('span').innerText = 'Transferir';
 
         // Agregamos la clase que deshabilita el boton.
         btnFormulario.classList.add('formulario__btn--disabled');
@@ -74,6 +74,19 @@ btnFormulario.addEventListener('click', (e) => {
 
         }, 4000);
 
+    }else if(pasoActual === 'confirmacion' && !btnFormulario.matches('.formulario__btn--disabled')){
+        // Aqui se haria una peticion al servidor, una redireccion, etc.
+        
+        // Cambiamos el texto del btn a 'Transferir'
+        btnFormulario.querySelector('span').innerText = 'Transfiriendo';
+        
+        // Agregamos la clase que deshabilita el boton.
+        btnFormulario.classList.add('formulario__btn--disabled');
+
+        setTimeout(() => {
+            formulario.classList.add('formulario--hidden');
+            document.getElementById('alerta').classList.add('alerta--active');
+        }, 4000);
     }
     
 });
