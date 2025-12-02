@@ -30,7 +30,7 @@ btnFormulario.addEventListener('click', (e) => {
     e.preventDefault();
 
     const pasoActual = document.querySelector('.linea-pasos__paso-check--active').closest('.linea-pasos__paso').dataset.paso;
-    console.log(pasoActual);
+
 
     if(pasoActual === 'cantidad'){
         if(validarCantidad()){
