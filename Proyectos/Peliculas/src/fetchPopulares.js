@@ -1,5 +1,3 @@
-'use strict';
-
 const fetchPopulares =  async () =>{
     const url = 'https://api.themoviedb.org/3/movie/popular?api_key=17c8e5f099f8712af5d2307d14218850&language=es-MX&page=1';
     
@@ -13,13 +11,6 @@ const fetchPopulares =  async () =>{
     }
     
     
-};
+}
 
-const cargar = async () => {
-    const peliculas = await fetchPopulares();
-    console.log(peliculas);
-    
-};
-
-cargar();
-//# sourceMappingURL=bundle.js.map
+export default fetchPopulares;
