@@ -1,8 +1,10 @@
 import fetchGeneros from "./fetchGeneros";
 import obtenerGenero from "./obtenerGenero";
 
-const fetchPopulares =  async () =>{
-    const url = 'https://api.themoviedb.org/3/movie/popular?api_key=17c8e5f099f8712af5d2307d14218850&language=es-MX&page=1&region=US';
+const fetchPopulares =  async (filtro = 'movie') =>{
+    const tipo = filtro === 'movie' ? 'movie' : 'tv';
+
+    const url = `https://api.themoviedb.org/3/${tipo}/popular?api_key=17c8e5f099f8712af5d2307d14218850&language=es-MX&page=1&region=US`;
     
     try{
         const respuesta = await fetch(url);

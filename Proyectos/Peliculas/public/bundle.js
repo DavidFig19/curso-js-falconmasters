@@ -1,7 +1,9 @@
 'use strict';
 
-const fetchGeneros = async() => {
-    const url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=17c8e5f099f8712af5d2307d14218850&language=es-MX';
+const fetchGeneros = async(filtro = 'movie') => {
+    const tipo = filtro === 'movie' ? 'movie' : 'tv';
+
+    const url = `https://api.themoviedb.org/3/genre/${tipo}/list?api_key=17c8e5f099f8712af5d2307d14218850&language=es-MX`;
     
     try{
         const respuesta = await fetch(url);
@@ -29,8 +31,10 @@ const obtenerGenero = (id,generos) => {
     return nombre;
 };
 
-const fetchPopulares =  async () =>{
-    const url = 'https://api.themoviedb.org/3/movie/popular?api_key=17c8e5f099f8712af5d2307d14218850&language=es-MX&page=1&region=US';
+const fetchPopulares =  async (filtro = 'movie') =>{
+    const tipo = filtro === 'movie' ? 'movie' : 'tv';
+
+    const url = `https://api.themoviedb.org/3/${tipo}/popular?api_key=17c8e5f099f8712af5d2307d14218850&language=es-MX&page=1&region=US`;
     
     try{
         const respuesta = await fetch(url);
@@ -57,8 +61,10 @@ const fetchPopulares =  async () =>{
 const cargarTitulos = (resultados) =>{
     const contenedor = document.querySelector("#populares .main__grid");
 
-    resultados.forEach((resultado) => {
+    contenedor.innerHTML = '';
         
+    resultados.forEach((resultado) => {
+       
         const plantilla = `
             <div class="main__media">
                 <a href="#" class="main__media-thumb">
@@ -76,8 +82,12 @@ const cargarTitulos = (resultados) =>{
 };
 
 const contenedorGenero = document.getElementById("filtro-generos");
-const cargarGeneros = async () => {
-    const generos = await fetchGeneros();
+const cargarGeneros = async (filtro) => {
+
+    const generos = await fetchGeneros(filtro);
+
+    contenedorGenero.innerHTML = '';
+
     generos.forEach((genero) => {
         const btn = document.createElement("button");
         btn.classList.add("btn");
@@ -88,10 +98,30 @@ const cargarGeneros = async () => {
     });
 };
 
+const filtroPelicula = document.getElementById('movie');
+const filtroShow = document.getElementById('tv');
+
+filtroPelicula.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Cargando Peliculas..');
+    
+});
+
+filtroShow.addEventListener('click', async (e) => {
+    e.preventDefault();
+    // Cargamos los generos en la barra lateral
+    cargarGeneros('tv');    
+
+    // Obtenemos los resultados
+    const resultados = await fetchPopulares('tv');
+    cargarTitulos(resultados);
+    
+});
+
 const cargar = async () => {
     const resultados = await fetchPopulares();
     cargarTitulos(resultados);
-    cargarGeneros();
+    cargarGeneros('movie');
     
 };
 
