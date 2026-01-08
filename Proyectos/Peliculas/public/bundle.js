@@ -136,6 +136,20 @@ filtroShow.addEventListener('click', async (e) => {
     document.querySelector('#populares .main__titulo').innerText = 'Series Populares';
 });
 
+const contenedor = document.getElementById('filtro-generos');
+
+contenedor.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    if(e.target.closest('button')){
+
+        contenedor.querySelector('.btn--active')?.classList.remove('btn--active');
+
+        // Agregamos la clase ative al boton que clickamos
+        e.target.classList.add('btn--active');
+    }
+});
+
 const cargar = async () => {
     const resultados = await fetchPopulares();
     cargarTitulos(resultados);
