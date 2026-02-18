@@ -152,22 +152,22 @@ contenedor.addEventListener('click', (e) => {
     }
 });
 
-const fetchBusqueda = async () => {
+const fetchBusqueda = async (pagina = 1) => {
     const tipo = document.querySelector('.main__filtros .btn--active')?.id;
-    const idGenero = document.querySelector('#filtro-generos .btn--active')?.dataset.id;
+    const idGenero = document.querySelector('#filtro-generos .btn--active')?.dataset.id || '';
+
+
     const añoInicial = document.getElementById('años-min').value || 1950;
     const añoFinal = document.getElementById('años-max').value || 2025;
-   
-    console.log(tipo,idGenero,añoInicial,añoFinal);
 
     let url;
     
     if (tipo === 'movie'){
-        url = `https://api.themoviedb.org/3/discover/movie?api_key=17c8e5f099f8712af5d2307d14218850&include_adult=false&include_video=false&language=es-MX&page=1&release_date.gte=${añoInicial}-01-01&release_date.lte=${añoFinal}-12-31&sort_by=popularity.desc&with_genres=${idGenero}`;
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=17c8e5f099f8712af5d2307d14218850&include_adult=false&include_video=false&language=es-MX&page=${pagina}&release_date.gte=${añoInicial}-01-01&release_date.lte=${añoFinal}-12-31&sort_by=popularity.desc&with_genres=${idGenero}`;
 
 
     }else if(tipo === 'tv'){
-        url = `https://api.themoviedb.org/3/discover/tv?api_key=17c8e5f099f8712af5d2307d14218850&first_air_date.gte=${añoInicial}&first_air_date.lte=${añoFinal}&include_adult=false&include_null_first_air_dates=false&language=es-MX&page=1&sort_by=popularity.desc&without_genres=${idGenero}`;
+        url = `https://api.themoviedb.org/3/discover/tv?api_key=17c8e5f099f8712af5d2307d14218850&first_air_date.gte=${añoInicial}&first_air_date.lte=${añoFinal}&include_adult=false&include_null_first_air_dates=false&language=es-MX&page=${pagina}&sort_by=popularity.desc&without_genres=${idGenero}`;
 
     }
 
@@ -196,6 +196,44 @@ const btn = document.getElementById('btn-buscar');
 btn.addEventListener('click', async (e) => {
     const resultados = await fetchBusqueda();
     cargarTitulos(resultados);
+});
+
+const anterior = document.getElementById('pagina-anterior');
+const siguiente = document.getElementById('pagina-siguiente');
+
+siguiente.addEventListener('click',async (e) => {
+    const paginaActual = parseInt(document.getElementById('populares').dataset.pagina);
+    
+    try {
+       const resultados = await fetchBusqueda(paginaActual + 1);
+       document.getElementById('populares').setAttribute('data-pagina', paginaActual + 1);
+       cargarTitulos(resultados);
+       window.scrollTo(0,0);
+       
+    } catch (e) {
+        console.log(e);
+        
+    }
+});
+
+anterior.addEventListener('click', async (e) => {
+    const paginaActual = parseInt(document.getElementById('populares').dataset.pagina);
+
+    if(paginaActual > 1){
+     
+        
+        try {
+            const resultados = await fetchBusqueda(paginaActual - 1);
+            document.getElementById('populares').setAttribute('data-pagina', paginaActual - 1);
+            cargarTitulos(resultados);
+            window.scrollTo(0,0);
+            
+        } catch (e) {
+            console.log(e);
+            
+        }
+    }
+    
 });
 
 const cargar = async () => {
