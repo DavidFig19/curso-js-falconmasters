@@ -6,7 +6,7 @@ const cargarTitulos = (resultados) =>{
     resultados.forEach((resultado) => {
        
         const plantilla = `
-            <div class="main__media">
+            <div class="main__media" data-id="${resultado.id}">
                 <a href="#" class="main__media-thumb">
                     ${
                         resultado.poster_path
