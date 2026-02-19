@@ -1,32 +1,3 @@
-'use strict';
-
-const boton = document.getElementById('toggle-form-gasto');
-const formularioGasto = document.getElementById('formulario-gasto');
-
-const abrirFormulrioGasto = () => {
-    boton.classList.add('agregar-gasto__btn--active');
-    formularioGasto.classList.add('formulario-gasto--active');
-};
-
-const cerrarFormulrioGasto = () => {
-    boton.classList.remove('agregar-gasto__btn--active');
-    formularioGasto.classList.remove('formulario-gasto--active');
-};
-
-
-boton.addEventListener('click',(e) => {
-    if([...formularioGasto.classList].includes('formulario-gasto--active')){
-
-        cerrarFormulrioGasto();
-
-    }else {
-        abrirFormulrioGasto();
-    }
-    
-   
-    
-});
-
 const formulario = document.querySelector('#formulario-gasto form');
 const descripcion = formulario.descripcion;
 
@@ -41,7 +12,7 @@ const comprobarDescripcion = () => {
             .classList.add('formulario-gasto__leyenda--active');
 
         return false;
-    }else {
+    }else{
 
         descripcion.classList.remove('formulario-gasto__input--error');
 
@@ -52,7 +23,7 @@ const comprobarDescripcion = () => {
     }
 
     
-};
+}
 
 descripcion.addEventListener('blur',(e) => comprobarDescripcion());
 descripcion.addEventListener('keyup',(e) => {
@@ -61,4 +32,3 @@ descripcion.addEventListener('keyup',(e) => {
     }
     
 });
-//# sourceMappingURL=bundle.js.map
