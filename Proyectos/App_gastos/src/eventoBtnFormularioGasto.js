@@ -1,17 +1,15 @@
-'use strict';
-
 const boton = document.getElementById('toggle-form-gasto');
 const formularioGasto = document.getElementById('formulario-gasto');
 
 const abrirFormulrioGasto = () => {
     boton.classList.add('agregar-gasto__btn--active');
     formularioGasto.classList.add('formulario-gasto--active');
-};
+}
 
 const cerrarFormulrioGasto = () => {
     boton.classList.remove('agregar-gasto__btn--active');
     formularioGasto.classList.remove('formulario-gasto--active');
-};
+}
 
 
 boton.addEventListener('click',(e) => {
@@ -19,11 +17,10 @@ boton.addEventListener('click',(e) => {
 
         cerrarFormulrioGasto();
 
-    }else {
+    }else{
         abrirFormulrioGasto();
     }
     
    
     
-});
-//# sourceMappingURL=bundle.js.map
+})
