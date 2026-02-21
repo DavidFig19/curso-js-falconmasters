@@ -69,3 +69,33 @@ precio.addEventListener('keyup',(e) => {
     }
     
 });
+
+formulario.addEventListener('submit',(e) => {
+    e.preventDefault();
+    if(comprobarDescripcion() && comprobarPrecio()){
+
+        const nuevoGasto = {
+            id:'1',
+            fecha: new Date(),
+            descripcion:descripcion.value,
+            precio:precio.value
+
+        };
+
+        const gastosGuardados = JSON.parse(window.localStorage.getItem('gastos'));
+
+        //comprobamos si hay gastos
+        if(gastosGuardados){
+            // Creamos una nueva lista de gastos que incluya el nuevo.
+            const nuevosGastos = [...gastosGuardados, nuevoGasto];
+            window.localStorage.setItem('gastos',JSON.stringify(nuevosGastos))
+        }else{
+            window.localStorage.setItem('gastos',JSON.stringify([{ ...nuevoGasto }]));
+        }
+
+        
+        
+        
+    }
+    
+});
