@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import { cerrarFormulrioGasto } from './eventoBtnFormularioGasto';
+import cargarGastos from './cargarGastos';
 
 const formulario = document.querySelector('#formulario-gasto form');
 const descripcion = formulario.descripcion;
@@ -96,6 +98,12 @@ formulario.addEventListener('submit',(e) => {
         }
 
         
+        descripcion.value = '';
+        precio.value = '';
+
+        cargarGastos();
+        cerrarFormulrioGasto();
+       
         
         
     }
