@@ -539,6 +539,38 @@ function startOfISOWeekYear(date, options) {
 }
 
 /**
+ * @name constructNow
+ * @category Generic Helpers
+ * @summary Constructs a new current date using the passed value constructor.
+ * @pure false
+ *
+ * @description
+ * The function constructs a new current date using the constructor from
+ * the reference date. It helps to build generic functions that accept date
+ * extensions and use the current date.
+ *
+ * It defaults to `Date` if the passed reference date is a number or a string.
+ *
+ * @param date - The reference date to take constructor from
+ *
+ * @returns Current date initialized using the given date constructor
+ *
+ * @example
+ * import { constructNow, isSameDay } from 'date-fns'
+ *
+ * function isToday<DateType extends Date>(
+ *   date: DateArg<DateType>,
+ * ): boolean {
+ *   // If we were to use `new Date()` directly, the function would  behave
+ *   // differently in different timezones and return false for the same date.
+ *   return isSameDay(date, constructNow(date));
+ * }
+ */
+function constructNow(date) {
+  return constructFrom(date, Date.now());
+}
+
+/**
  * @name isDate
  * @category Common Helpers
  * @summary Is the given value a date?
@@ -2893,6 +2925,76 @@ function cleanEscapedString(input) {
 }
 
 /**
+ * The {@link isSameMonth} function options.
+ */
+
+/**
+ * @name isSameMonth
+ * @category Month Helpers
+ * @summary Are the given dates in the same month (and year)?
+ *
+ * @description
+ * Are the given dates in the same month (and year)?
+ *
+ * @param laterDate - The first date to check
+ * @param earlierDate - The second date to check
+ * @param options - An object with options
+ *
+ * @returns The dates are in the same month (and year)
+ *
+ * @example
+ * // Are 2 September 2014 and 25 September 2014 in the same month?
+ * const result = isSameMonth(new Date(2014, 8, 2), new Date(2014, 8, 25))
+ * //=> true
+ *
+ * @example
+ * // Are 2 September 2014 and 25 September 2015 in the same month?
+ * const result = isSameMonth(new Date(2014, 8, 2), new Date(2015, 8, 25))
+ * //=> false
+ */
+function isSameMonth(laterDate, earlierDate, options) {
+  const [laterDate_, earlierDate_] = normalizeDates(
+    options?.in,
+    laterDate,
+    earlierDate,
+  );
+  return (
+    laterDate_.getFullYear() === earlierDate_.getFullYear() &&
+    laterDate_.getMonth() === earlierDate_.getMonth()
+  );
+}
+
+/**
+ * The {@link isThisMonth} function options.
+ */
+
+/**
+ * @name isThisMonth
+ * @category Month Helpers
+ * @summary Is the given date in the same month as the current date?
+ * @pure false
+ *
+ * @description
+ * Is the given date in the same month as the current date?
+ *
+ * @param date - The date to check
+ * @param options - An object with options
+ *
+ * @returns The date is in this month
+ *
+ * @example
+ * // If today is 25 September 2014, is 15 September 2014 in this month?
+ * const result = isThisMonth(new Date(2014, 8, 15))
+ * //=> true
+ */
+function isThisMonth(date, options) {
+  return isSameMonth(
+    constructFrom(options?.in || date, date),
+    constructNow(options?.in || date),
+  );
+}
+
+/**
  * The {@link parseISO} function options.
  */
 
@@ -3671,8 +3773,23 @@ const contenedorGastos = document.querySelector('#gastos .gastos__lista');
 const cargarGastos = () => {
     const gastos = JSON.parse(window.localStorage.getItem('gastos'));
 
+    //comprobamos que haya gastos
     if(gastos && gastos.length > 0){
         
+        const gastosDelMes = gastos.filter((gasto) => {
+
+            if(isThisMonth(parseISO(gasto.fecha))){
+                return gasto;
+            }
+            
+        });
+
+        //filtrar solo gastos del mes en el local storage
+        if(gastosDelMes){
+            window.localStorage.setItem('gastos',JSON.stringify(gastosDelMes));
+        }
+        
+
         // Si hay gastos removemos el mensaje que indica que no hay gastos.
         document.querySelector('#gastos .gastos__mensaje').classList.remove('gastos__mensaje--active');
 
@@ -3681,7 +3798,7 @@ const cargarGastos = () => {
 
         const formatoMoneda = new Intl.NumberFormat('en-MX', {style:'currency', currency:'MXN'});
 
-        gastos.forEach((gasto) => {
+        gastosDelMes.forEach((gasto) => {
             const precio = formatoMoneda.format(gasto.precio);
 
             contenedorGastos.innerHTML += `

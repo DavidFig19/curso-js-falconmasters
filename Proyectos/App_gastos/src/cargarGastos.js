@@ -1,14 +1,31 @@
 import { format } from "date-fns";
 import { parseISO } from "date-fns";
 import { es } from "date-fns/locale";
+import { isThisMonth } from "date-fns";
+
 
 const contenedorGastos = document.querySelector('#gastos .gastos__lista')
 
 const cargarGastos = () => {
     const gastos = JSON.parse(window.localStorage.getItem('gastos'));
 
+    //comprobamos que haya gastos
     if(gastos && gastos.length > 0){
         
+        const gastosDelMes = gastos.filter((gasto) => {
+
+            if(isThisMonth(parseISO(gasto.fecha))){
+                return gasto;
+            }
+            
+        });
+
+        //filtrar solo gastos del mes en el local storage
+        if(gastosDelMes){
+            window.localStorage.setItem('gastos',JSON.stringify(gastosDelMes));
+        }
+        
+
         // Si hay gastos removemos el mensaje que indica que no hay gastos.
         document.querySelector('#gastos .gastos__mensaje').classList.remove('gastos__mensaje--active');
 
@@ -17,7 +34,7 @@ const cargarGastos = () => {
 
         const formatoMoneda = new Intl.NumberFormat('en-MX', {style:'currency', currency:'MXN'});
 
-        gastos.forEach((gasto) => {
+        gastosDelMes.forEach((gasto) => {
             const precio = formatoMoneda.format(gasto.precio);
 
             contenedorGastos.innerHTML += `
