@@ -1,7 +1,7 @@
 const boton = document.getElementById('toggle-form-gasto');
 const formularioGasto = document.getElementById('formulario-gasto');
 
-const abrirFormulrioGasto = () => {
+const abrirFormularioGasto = () => {
     boton.classList.add('agregar-gasto__btn--active');
     formularioGasto.classList.add('formulario-gasto--active');
 }
@@ -18,11 +18,11 @@ boton.addEventListener('click',(e) => {
         cerrarFormulrioGasto();
 
     }else{
-        abrirFormulrioGasto();
+        abrirFormularioGasto();
     }
     
    
     
 })
 
-export {cerrarFormulrioGasto, abrirFormulrioGasto};
+export {cerrarFormulrioGasto, abrirFormularioGasto};

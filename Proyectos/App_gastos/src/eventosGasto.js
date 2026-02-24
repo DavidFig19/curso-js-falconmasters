@@ -1,4 +1,7 @@
+import { abrirFormularioGasto } from "./eventoBtnFormularioGasto";
+
 const contenedorGastos = document.getElementById('gastos');
+
 contenedorGastos.addEventListener('click', (e) => {
     const gasto = e.target.closest('.gasto');
     
@@ -21,4 +24,36 @@ contenedorGastos.addEventListener('click', (e) => {
         }
        
     }
+
+    // Editar gasto
+    if(e.target.closest('[data-accion="editar-gasto"]')){
+        // Obtenemos el id del gasto que queremos editar.
+        const id = gasto.dataset.id;
+       
+        // Obtenemos los gastos guardados
+        const gastosGuardados = JSON.parse(window.localStorage.getItem('gastos'));
+
+        let precio = '';
+        let descripcion = '';
+
+        // Comprobamos si hay gastos
+        if(gastosGuardados && gastosGuardados.length > 0){
+            gastosGuardados.forEach((gasto) => {
+                if(gasto.id === id){
+                   precio = gasto.precio;
+                   descripcion = gasto.descripcion;
+                }
+            });
+
+            // Le ponemos la descripcion y el precio a los inputs del formulario.
+            document.querySelector('#formulario-gasto #descripcion').value = descripcion;
+            document.querySelector('#formulario-gasto #precio').value = precio;
+            document.querySelector('#formulario-gasto').dataset.id = id;
+
+            abrirFormularioGasto('editar-gasto');
+            
+        }
+        
+    }
+    
 });
