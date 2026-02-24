@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { cerrarFormulrioGasto } from './eventoBtnFormularioGasto';
+import { cerrarFormularioGasto } from './eventoBtnFormularioGasto';
 import cargarGastos from './cargarGastos';
 import cargarTotalGastado from './cargarTotalGastado';
 
@@ -103,7 +103,7 @@ formulario.addEventListener('submit',(e) => {
         precio.value = '';
 
         cargarGastos();
-        cerrarFormulrioGasto();
+        cerrarFormularioGasto();
         cargarTotalGastado();
         
         

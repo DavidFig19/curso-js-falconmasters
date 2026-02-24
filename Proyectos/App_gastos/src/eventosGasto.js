@@ -50,7 +50,7 @@ contenedorGastos.addEventListener('click', (e) => {
             document.querySelector('#formulario-gasto #precio').value = precio;
             document.querySelector('#formulario-gasto').dataset.id = id;
 
-            abrirFormularioGasto('editar-gasto');
+            abrirFormularioGasto('editarGasto');
             
         }
         
