@@ -3862,6 +3862,31 @@ const cargarGastos = () => {
     
 };
 
+const cargarTotalGastado = () => {
+    const contenedorTotalGastado = document.getElementById('total-gastado');
+    const gastos = JSON.parse(window.localStorage.getItem('gastos'));
+    let total = 0;
+   
+    if(gastos){
+        const gastosDelMes = gastos.filter((gasto) => {
+            if(isThisMonth(parseISO(gasto.fecha))){
+                return gasto;
+            }
+        });
+
+        if(gastosDelMes){
+            gastosDelMes.forEach((gasto) => {
+                total += parseFloat(gasto.precio);
+            });
+        }
+
+        //formateamos el numero y lo agregamos al contendor.
+        const formatoMoneda = new Intl.NumberFormat('en-MX',{style:'currency', currency:'MXN'});
+        contenedorTotalGastado.innerText = formatoMoneda.format(total);
+        
+    }
+};
+
 const formulario = document.querySelector('#formulario-gasto form');
 const descripcion = formulario.descripcion;
 const precio = formulario.precio;
@@ -3963,7 +3988,7 @@ formulario.addEventListener('submit',(e) => {
 
         cargarGastos();
         cerrarFormulrioGasto();
-       
+        cargarTotalGastado();
         
         
     }
@@ -3971,4 +3996,5 @@ formulario.addEventListener('submit',(e) => {
 });
 
 cargarGastos();
+cargarTotalGastado();
 //# sourceMappingURL=bundle.js.map
