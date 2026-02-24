@@ -4105,6 +4105,29 @@ contenedorGastos.addEventListener('click', (e) => {
         }
         
     }
+
+    // Borrar gasto
+    if(e.target.closest('[data-accion="eliminar-gasto"]')){
+        // Obtenemos el id del gasto que queremos eliminar.
+        const id = e.target.closest('.gasto').dataset.id;
+        
+        // Obtener los gastos guardados
+        const gastosGuardados = JSON.parse(window.localStorage.getItem('gastos'));
+        
+        if(gastosGuardados){
+            const nuevosGastos = gastosGuardados.filter((gasto) => {
+                if(gasto.id !== id){
+                    return gasto;
+                }
+            });
+
+            window.localStorage.setItem('gastos',JSON.stringify(nuevosGastos));
+
+            cargarGastos();
+            cargarTotalGastado();
+            
+        }
+    }
     
 });
 
