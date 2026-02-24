@@ -3768,7 +3768,7 @@ const es = {
   },
 };
 
-const contenedorGastos = document.querySelector('#gastos .gastos__lista');
+const contenedorGastos$1 = document.querySelector('#gastos .gastos__lista');
 
 const cargarGastos = () => {
     const gastos = JSON.parse(window.localStorage.getItem('gastos'));
@@ -3794,14 +3794,14 @@ const cargarGastos = () => {
         document.querySelector('#gastos .gastos__mensaje').classList.remove('gastos__mensaje--active');
 
         // Nos aseguramos que no haya gastos en el DOM
-        contenedorGastos.innerHTML = "";
+        contenedorGastos$1.innerHTML = "";
 
         const formatoMoneda = new Intl.NumberFormat('en-MX', {style:'currency', currency:'MXN'});
 
         gastosDelMes.forEach((gasto) => {
             const precio = formatoMoneda.format(gasto.precio);
 
-            contenedorGastos.innerHTML += `
+            contenedorGastos$1.innerHTML += `
                 		<div class="gasto" data-id="${gasto.id}">
 							<div class="gasto__info">
 								<div>
@@ -3854,7 +3854,7 @@ const cargarGastos = () => {
         
     }else {
         // Nos aseguramos que no haya gastos en el DOM
-        contenedorGastos.innerHTML = "";
+        contenedorGastos$1.innerHTML = "";
         
         // Si no hay gastos activamos el mensaje que indica que no hay gastos.
         document.querySelector('#gastos .gastos__mensaje').classList.add('gastos__mensaje--active');
@@ -3993,6 +3993,31 @@ formulario.addEventListener('submit',(e) => {
         
     }
     
+});
+
+const contenedorGastos = document.getElementById('gastos');
+contenedorGastos.addEventListener('click', (e) => {
+    const gasto = e.target.closest('.gasto');
+    
+    // Comprobamos si estamos haciendo click en un gasto
+    if(gasto){
+
+        if(gasto.scrollLeft > 0){
+            gasto.querySelector('.gasto__info').scrollIntoView({
+                behavior:'smooth',
+                inline:'start',
+                block:'nearest'
+            });
+
+        }else {
+            gasto.querySelector('.gasto__acciones').scrollIntoView({
+                behavior:'smooth',
+                inline:'start',
+                block:'nearest'
+            });
+        }
+       
+    }
 });
 
 cargarGastos();
