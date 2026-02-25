@@ -1,4 +1,5 @@
-import './animarGaleria'
+import './animarGaleria';
+import './galeria';
 import animarTexto from "./animarTexto";
 
 
