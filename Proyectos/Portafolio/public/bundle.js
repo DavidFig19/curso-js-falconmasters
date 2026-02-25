@@ -114,6 +114,55 @@ ventanaTrabajos.querySelector('.ventana__overlay').addEventListener('click',(e) 
     
 });
 
+const slider = document.getElementById('slider');
+
+// Variable que guarda el estado de si tenemos el click presionado.
+let clickPresionado = false;
+let coordenadaInicial;
+let scrollLeft;  // Guardamos la posicion del scroll del slider
+
+
+const presiona = (e) => {
+    clickPresionado = true;
+    
+
+	// e.pageX - Coordenada horizontal del evento. En que coordenada dimos click con respecto al documento.
+	// slider.offsetLeft - El espacio entre el slider y la parte izquierda del documento.
+    coordenadaInicial = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+
+    console.log('pageX: ', e.pageX);
+	console.log('slider.offsetLeft: ', slider.offsetLeft);
+	console.log('scrollLeft: ', slider.scrollLeft);
+    
+};
+const mueve = (e) => {
+    if(!clickPresionado){
+        return;
+    }
+
+    // Espaciado entre la coordenada de inicio del slider y donde dimos click.
+    const espaciado = e.pageX - slider.offsetLeft;
+    const distanciaRecorrida = espaciado - coordenadaInicial;
+
+    console.log('distancia: ', distanciaRecorrida);
+	console.log('scrollLeft: ', scrollLeft);
+
+    // Desplazamos el scroll.
+	// A la posicion inicial del scroll cuando dimos click le restamos la distancia.
+    slider.scrollLeft = scrollLeft - distanciaRecorrida;
+    
+};
+const suelta = () => {
+    clickPresionado = false;
+    console.log('suelta');
+    
+};
+
+slider.addEventListener('mousedown',presiona);
+slider.addEventListener('mousemove',mueve);
+slider.addEventListener('mouseup',suelta);
+
 const animarTexto = (elemento, tiempoAnimacion = 100) =>{
     const numeroDeLetras = elemento.dataset.texto.length;
 
